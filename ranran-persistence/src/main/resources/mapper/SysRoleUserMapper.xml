@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ranran.persistence.mapper.SysRoleUserMapper">
+
+    <select id="selectUnallocatedPage" parameterType="SysUser" resultType="SysUser">
+        select distinct u.user_id, u.file_id, u.username, u.nickname, u.password, u.email,
+            u.avatar, u.phone, u.status, u.create_time, u.update_time
+        from sys_user u
+        where u.status = '1'
+          and u.user_id not in (select distinct ru.user_id
+                    from sys_role_user ru where ru.role_id = #{roleId})
+    </select>
+
+</mapper>

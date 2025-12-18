@@ -1,0 +1,57 @@
+body {
+  height: 100%;
+  margin: 0;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+.page-div {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  background-color: transparent !important;
+}
+
+.query_input {
+  width: 200px;
+}
+
+.el-button {
+  font-size: 0.8rem;   
+  height: 1.8rem;
+}
+
+.mb8 {
+  margin-bottom: 8px;
+}
+.mb10 {
+  margin-bottom: 10px;
+}
+.mb12 {
+  margin-bottom: 12px;
+}
+.mb14 {
+  margin-bottom: 14px;
+}
+.mb16 {
+  margin-bottom: 16px;
+}
+.mt8 {
+  margin-top: 8px;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mt12 {
+  margin-top: 12px;
+}
+.mt14 {
+  margin-top: 14px;
+}
+.mt16 {
+  margin-top: 16px;
+}
+
+

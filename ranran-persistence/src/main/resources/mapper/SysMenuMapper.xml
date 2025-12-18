@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ranran.persistence.mapper.SysMenuMapper">
+
+    <sql id="selectMenuSql">
+        select distinct m.menu_id, m.parent_id, m.menu_name, m.menu_code, m.menu_type,
+            m.path, m.view_path, m.permissions, m.icon, m.sort, m.status
+        from sys_menu m
+            left join sys_role_menu rm on rm.menu_id = m.menu_id
+            left join sys_role r on r.role_id = rm.role_id
+            left join sys_role_user ru on ru.role_id = r.role_id
+    </sql>
+
+    <select id="selectRoutesByUserId" resultType="SysMenu">
+        <include refid="selectMenuSql"/>
+        where m.status = '1' and r.status = '1'
+        and (m.menu_type = '1' or m.menu_type = '2')
+        and ru.user_id = #{userId}
+        order by m.parent_id, m.sort
+    </select>
+
+    <select id="selectRoutes" resultType="SysMenu">
+        <include refid="selectMenuSql"/>
+        where m.status = '1' and (m.menu_type = '1' or m.menu_type = '2')
+        order by m.parent_id, m.sort
+    </select>
+
+    <select id="selectAllMenu" parameterType="SysMenu" resultType="SysMenu">
+        <include refid="selectMenuSql"/>
+        where 1 = 1
+        <if test="status != null and status != ''">
+            AND m.status = #{status}
+        </if>
+        <if test="menuName != null and menuName != ''">
+            AND m.menu_name like concat('%', #{menuName}, '%')
+        </if>
+        order by m.parent_id, m.sort
+    </select>
+
+    <select id="selectPermissionsByRole" parameterType="Long" resultType="String">
+        select distinct m.permissions
+        from sys_menu m
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        where m.status = '1'
+        <if test="roleIdSet != null and roleIdSet.size() > 0">
+            and rm.role_id in
+            <foreach collection="roleIdSet" item="roleId" open="(" separator="," close=")">
+                #{roleId}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>

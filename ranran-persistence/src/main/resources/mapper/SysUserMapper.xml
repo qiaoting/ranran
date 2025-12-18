@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ranran.persistence.mapper.SysUserMapper">
+
+    <resultMap type="SysUser" id="SysUserResult">
+        <id property="userId" column="user_id"/>
+        <result property="fileId" column="file_id"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>
+    </resultMap>
+
+    <resultMap id="RoleResult" type="SysRole">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleCode" column="role_code"/>
+        <result property="sort" column="sort"/>
+        <result property="status" column="role_status"/>
+    </resultMap>
+
+    <sql id="selectUserSql">
+        select u.user_id, u.file_id, u.username, u.nickname, u.password, u.email,
+               u.avatar, u.phone, u.status, u.create_time, u.update_time, r.role_id,
+               r.role_name, r.role_code, r.sort, r.status
+        from sys_user u
+            left join sys_role_user ru on u.user_id = ru.user_id
+            left join sys_role r on r.role_id = ru.role_id
+    </sql>
+
+    <select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
+        <include refid="selectUserSql"/>
+        where u.user_id = #{userId}
+    </select>
+
+    <select id="selectUserByUsername" parameterType="String" resultMap="SysUserResult">
+        <include refid="selectUserSql"/>
+        where u.username = #{username}
+        and u.status = '1'
+    </select>
+
+</mapper>
