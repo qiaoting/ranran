@@ -156,7 +156,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup name="Announcement">
 import { onMounted, reactive, ref, createVNode } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";

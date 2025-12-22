@@ -13,8 +13,8 @@
 - 执行 `npm install` 安装依赖
 - 前端代码中vite.config.js文件中配置了代理，默认指向本地的8080端口，如有需要可自行修改
   target: 'http://localhost:8080/'
-- 执行 `npm run dev` 启动前端服务，默认端口为3000
-- 浏览器访问 `http://localhost:3000` 即可看到系统登录页面
+- 执行 `npm run dev` 启动前端服务，默认端口为80
+- 浏览器访问 `http://localhost:80` 即可看到系统登录页面,第一次访问可能会稍微慢
 
 ### 前端目录说明
 

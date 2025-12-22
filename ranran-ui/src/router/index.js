@@ -5,6 +5,8 @@ import {useUserStore} from "@/store/user";
 import {useMenuStore} from "@/store/menu";
 import {getToken} from "@/utils/auth";
 import NProgress from 'nprogress'
+import {getRoutesTree} from "@/api/system/menu";
+import {ElMessage} from 'element-plus'
 
 NProgress.configure({
   color: '#4fc08d',
@@ -15,17 +17,17 @@ NProgress.configure({
   trickleSpeed: 200
 });
 
-const modules = import.meta.glob("@/views/**/*.vue", {eager: false});
+const modules = import.meta.glob("@/views/**/*.vue", {eager: true});
 
 function loadView(view) {
-    if (view.startsWith("/")) {
-        const path = `@/views${view}.vue`;
-        return modules[path] || (() => import("@/views/public/404.vue"));
-    }
     for (const path in modules) {
         const match = path.match(/views\/(.*)\.vue$/);
         if (match && match[1] === view) {
-            return modules[path];
+            const module = modules[path];
+            if (module.default) {
+                return () => Promise.resolve(module.default);
+            }
+            return module; 
         }
     }
     return () => import("@/views/public/404.vue");
@@ -36,136 +38,159 @@ export const constantRoutes = [
         path: "/login",
         name: "Login",
         component: () => import("@/views/Login.vue"),
-        meta: {show: false},
     },
     {
-        path: "/",
+        path: "",
+        name: "",
+        redirect: "/index"
+    },
+    {
+        path: "/index",
+        name: "IndexLayout",
         component: Layout,
-        name: "Layout",
-        redirect: "/index",
+        show: true,
+        meta: {
+            title: "首页",
+            icon: "House"
+        },
         children: [
             {
-                path: "index",
+                path: "",
                 name: "Index",
                 component: () => import("@/views/Home.vue"),
-                meta: {
-                    show: true,
-                    title: "首页",
-                    icon: "House",
-                    affix: true,
-                },
-            },
-        ],
-    },
-    {
-        path: "/:pathMatch(.*)*",
-        component: () => import("@/views/public/404.vue"),
-        meta: {show: false}
+            }
+        ]
     },
     {
         path: "/myself",
         component: Layout,
-        meta: {show: true},
         name: "Myself",
         children: [
             {
                 path: "profile",
                 name: "Profile",
                 component: () => import("@/views/system/profile/index.vue"),
-                meta: {show: false, title: "个人中心", icon: "UserFilled"},
+                meta: {
+                    title: "个人中心",
+                    icon: "UserFilled"
+                }
             },
         ],
     },
     {
-        path: "/system/roleUserList",
+        path: "/system/role-user",
         component: Layout,
-        meta: {show: false},
         children: [
             {
-                path: ":roleId",
+                path: "index/:roleId",
                 name: "RoleUserList",
                 component: () => import("@/views/system/role/roleUserList.vue"),
                 meta: {
                     title: "角色分配用户",
-                    activeMenu: "/system/role",
-                },
+                    activeMenu: "/system/role"
+                }
             },
         ],
     },
+    {
+        path: "/:pathMatch(.*)",
+        component: () => import("@/views/public/404.vue")
+    }
 ];
 
-function getRouteComponent(viewPath) {
-    const layoutMap = {Layout, ParentView};
-    return layoutMap[viewPath] || loadView(viewPath);
+function getRouteComponent(route) {
+    if (route.component === 'Layout') {
+        route.component = Layout
+    } else if (route.component === 'ParentView') {
+        route.component = ParentView
+    } else {
+        route.component = loadView(route.component)
+    }
 };
 
-function convertMenuToRoutes(menus, parentPath = "") {
-    if (!Array.isArray(menus)) return [];
-
-    return menus
-        .map((menu) => {
-            if (!menu.path || !menu.menuCode) return null;
-            const fullPath = parentPath
-                ? `${parentPath}/${menu.path}`.replace(/\/+/g, "/")
-                : menu.path.startsWith("/")
-                    ? menu.path
-                    : `/${menu.path}`;
-
-            const route = {
-                path: fullPath,
-                name: menu.menuCode,
-                meta: {
-                    title: menu.menuName || "未知菜单",
-                    icon: menu.icon,
-                    show: true,
-                    menuType: menu.menuType,
-                },
-                component: getRouteComponent(menu.viewPath),
-            };
-            if (menu.children?.length) {
-                route.children = convertMenuToRoutes(menu.children, fullPath).filter(
-                    Boolean
-                );
+function fillView(routes) {
+    if (!Array.isArray(routes)) return [];
+    return routes
+        .map((route) => {
+            if (!route.path || !route.name) return null;
+            getRouteComponent(route);
+            if (route.children && Array.isArray(route.children)) {
+                const processedChildren = fillView(route.children).filter(Boolean);
+                if (processedChildren.length === 0) {
+                    delete route.children;
+                } else {
+                    route.children = processedChildren;
+                }
+            } else {
+                delete route.children;
+            }
+            if (route.redirect === undefined || route.redirect === null) {
+                delete route.redirect;
             }
             return route;
         })
         .filter(Boolean);
-};
+}
 
 const router = createRouter({
     history: createWebHistory(),
     routes: constantRoutes,
 });
 
-router.beforeEach(async (to, from, next) => {
-    NProgress.start()
-    const whiteList = ["/login"];
-    const userStore = useUserStore();
-    const menuStore = useMenuStore();
 
+router.beforeEach((to, from, next) => {
+
+    NProgress.start()
     if (getToken()) {
         if (to.path === "/login") {
-            next({path: "/"});
-        } else if (!userStore.hasLoadedRoutes) {
-            await userStore.fetchUserInfo();
-            await menuStore.loadMenuList();
-            const dynamicRoutes = convertMenuToRoutes(menuStore.menuList);
-            dynamicRoutes.forEach((route) => {
-                if (!router.hasRoute(route.name)) {
-                    router.addRoute("Layout", route);
-                }
-            });
-            userStore.setHasLoadedRoutes(true);
-            next({...to, replace: true});
+            next({path: "/index"});
         } else {
-            next();
-        }
-    } else if (whiteList.includes(to.path)) {
-        next();
+            if (permitRequest(to.path)) {
+                next()
+            } else {
+                if (useUserStore().info === null) {
+                    useUserStore().fetchUserInfo().then(() => {
+                        getRoutesTree({}).then(res => {
+                            const dynamicRoutes = fillView(res.data || []);
+                            dynamicRoutes.forEach((route) => {
+                                router.addRoute(route);
+                            });
+                            useMenuStore().setMenuList([...constantRoutes, ...dynamicRoutes])
+                            next({...to, replace: true}); 
+                        }).catch(err => {
+                            useUserStore().logout().then(() => {
+                                ElMessage.error(err)
+                                next({ path: '/index' })
+                            })
+                        })
+                    }).catch(err => {
+                        useUserStore().logout().then(() => {
+                            ElMessage.error(err)
+                            next({ path: '/index' })
+                        })
+                    })
+                } else {
+                    next()
+                }
+            }
+        } 
     } else {
-        next(`/login?redirect=${to.fullPath}`);
+        if (permitRequest(to.path)) {
+            next();
+        } else {
+            next(`/login?redirect=${to.fullPath}`);
+        }
     }
 });
+const whiteList = ["/login"];
+function permitRequest(path) {
+    return whiteList.some(pattern => isMatch(pattern, path))
+}
+export function isMatch(pattern, path) {
+  const regexPattern = pattern.replace(/\//g, '\\/').replace(/\*\*/g, '.*').replace(/\*/g, '[^\\/]*')
+  const regex = new RegExp(`^${regexPattern}$`)
+  return regex.test(path)
+}
 router.afterEach(() => {
   NProgress.done()
 });

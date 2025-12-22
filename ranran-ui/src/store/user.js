@@ -5,7 +5,7 @@ import {deleteToken, setToken} from "@/utils/auth";
 // 用户store
 export const useUserStore = defineStore("user", {
     state: () => ({
-        info: {},
+        info: null,
         hasLoadedRoutes: false
     }),
     actions: {
@@ -23,7 +23,7 @@ export const useUserStore = defineStore("user", {
             return new Promise((resolve, reject) => {
                 logoutApi().then(res => {
                     deleteToken();
-                    this.info = {};
+                    this.info = null;
                     this.hasLoadedRoutes = false;
                     resolve()
                 }).catch(error => {
@@ -34,7 +34,7 @@ export const useUserStore = defineStore("user", {
         fetchUserInfo() {
             return new Promise((resolve, reject) => {
                 getInfo().then(res => {
-                    this.info = res.data || {};
+                    this.info = res.data || null;
                     resolve()
                 }).catch(error => {
                     reject(error)

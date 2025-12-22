@@ -12,8 +12,8 @@
     <div class="header-right">
       <el-dropdown @command="handleCommand">
         <div class="avatar-dropdown">
-          <el-avatar :src="userStore.info.avatar ? (baseUrl + userStore.info.avatar) : defaultAvatar"/>
-          <span>{{ userStore.info.nickname }}</span>
+          <el-avatar :src="userStore.info?.avatar ? (baseUrl + userStore.info?.avatar) : defaultAvatar"/>
+          <span>{{ userStore.info?.nickname }}</span>
           <el-icon>
             <arrow-down-bold/>
           </el-icon>

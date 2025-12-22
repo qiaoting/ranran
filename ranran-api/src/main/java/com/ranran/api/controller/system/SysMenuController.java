@@ -2,6 +2,7 @@ package com.ranran.api.controller.system;
 
 import com.ranran.common.domain.Result;
 import com.ranran.common.domain.entity.SysMenu;
+import com.ranran.common.domain.vo.RouteVo;
 import com.ranran.common.utils.StrUtil;
 import com.ranran.persistence.service.impl.SysMenuService;
 import com.ranran.persistence.service.impl.SysRoleMenuService;
@@ -40,9 +41,9 @@ public class SysMenuController {
      * 获取菜单树（用于前端路由渲染）
      */
     @GetMapping("/getRoutesTree")
-    public Result<List<SysMenu>> getRoutesTree(SysMenu sysMenu) {
-        List<SysMenu> list = sysMenuService.getRoutes();
-        List<SysMenu> menuTree = sysMenuService.buildTree(list, 0L);
+    public Result<List<RouteVo>> getRoutesTree(SysMenu sysMenu) {
+        List<RouteVo> list = sysMenuService.getRoutes();
+        List<RouteVo> menuTree = sysMenuService.buildRouteTree(list, 0L);
         return Result.success(menuTree);
     }
 

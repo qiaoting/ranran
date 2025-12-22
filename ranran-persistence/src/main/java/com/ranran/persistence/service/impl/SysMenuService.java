@@ -3,6 +3,8 @@ package com.ranran.persistence.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ranran.common.domain.entity.SysMenu;
+import com.ranran.common.domain.vo.Meta;
+import com.ranran.common.domain.vo.RouteVo;
 import com.ranran.common.utils.ObjUtil;
 import com.ranran.common.utils.SecurityUtil;
 import com.ranran.persistence.mapper.SysMenuMapper;
@@ -49,11 +51,36 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         return baseMapper.selectAllMenu(sysMenu);
     }
 
-    public List<SysMenu> getRoutes() {
+    public List<RouteVo> getRoutes() {
+        List<SysMenu> menus = null;
+        List<RouteVo> routeVoList = new ArrayList<>();
         if (SecurityUtil.isAdmin(SecurityUtil.getLoginUser().getUserId())) {
-            return baseMapper.selectRoutes();
+            menus = baseMapper.selectRoutes();
+        } else {
+            menus = baseMapper.selectRoutesByUserId(SecurityUtil.getLoginUser().getUserId());
         }
-        return baseMapper.selectRoutesByUserId(SecurityUtil.getLoginUser().getUserId());
+        if (ObjUtil.isNotNull(menus)) {
+            for (SysMenu menu : menus) {
+                RouteVo routeVo = new RouteVo();
+                routeVo.setRouteId(menu.getMenuId());
+                routeVo.setParentId(menu.getParentId());
+                routeVo.setSort(menu.getSort());
+                routeVo.setName(menu.getMenuCode());
+                if (menu.getParentId() == 0L) {
+                    routeVo.setComponent("Layout");
+                    routeVo.setPath(menu.getPath().startsWith("/") ? menu.getPath() : "/" + menu.getPath());
+                } else {
+                    routeVo.setComponent(menu.getViewPath());
+                    routeVo.setPath(menu.getPath());
+                }
+                Meta meta = new Meta();
+                meta.setTitle(menu.getMenuName());
+                meta.setIcon(menu.getIcon());
+                routeVo.setMeta(meta);
+                routeVoList.add(routeVo);
+            }
+        }
+        return routeVoList;
     }
 
     public boolean hasChildren(Long menuId) {
@@ -75,6 +102,22 @@ public class SysMenuService extends ServiceImpl<SysMenuMapper, SysMenu> {
         }
         // 按排序号升序
         treeMenus.sort(Comparator.comparingInt(SysMenu::getSort));
+        return treeMenus;
+    }
+
+    // 递归构建树形结构
+    public List<RouteVo> buildRouteTree(List<RouteVo> menus, Long parentId) {
+        List<RouteVo> treeMenus = new ArrayList<>();
+        for (RouteVo routeVo : menus) {
+            if (parentId.equals(routeVo.getParentId())) {
+                // 递归查找子菜单
+                List<RouteVo> children = buildRouteTree(menus, routeVo.getRouteId());
+                routeVo.setChildren(children);
+                treeMenus.add(routeVo);
+            }
+        }
+        // 按排序号升序
+        treeMenus.sort(Comparator.comparingInt(RouteVo::getSort));
         return treeMenus;
     }
 

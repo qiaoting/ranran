@@ -6,6 +6,7 @@ import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
+    base: '/',
     plugins: [
         vue(),
         AutoImport({resolvers: [ElementPlusResolver()]}),
@@ -17,8 +18,9 @@ export default defineConfig({
         }
     },
     server: {
-        port: 3000,
+        port: 80,
         open: true,
+        host: true,
         proxy: {
             '/backend': {
                 target: 'http://localhost:8080/',

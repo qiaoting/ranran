@@ -13,7 +13,7 @@
              background-color="rgb(50, 66, 88)" text-color="#fff" active-text-color="#ffd04b"
              :collapse="sidebarStore.isCollapse" :collapse-transition="false" :router="true" :unique-opened="true"
              style="flex: 1;">
-      <template v-for="menu in menuRoutes" :key="menu.menuId">
+      <template v-for="menu in menuRoutes">
         <sidebar-item :item="menu" :parent-path="''" :is-collapse="sidebarStore.isCollapse"/>
       </template>
     </el-menu>
@@ -36,20 +36,8 @@ const {menuList} = storeToRefs(menuStore)
 
 const activeMenu = computed(() => route.meta?.activeMenu || route.path)
 
-function filterMenusRecursive(menus) {
-  if (!menus || !menus.length) return []
-  return menus
-      .map(menu => {
-        const newMenu = {...menu}
-        if (newMenu.children && newMenu.children.length) {
-          newMenu.children = filterMenusRecursive(newMenu.children)
-        }
-        return newMenu
-      })
-}
-
 const menuRoutes = computed(() => {
-  return filterMenusRecursive(menuList.value)
+  return menuList.value
 })
 
 const openMenus = computed(() => {

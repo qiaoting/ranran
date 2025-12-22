@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup name="Login">
 import {ref, onMounted} from 'vue'
 import {useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'

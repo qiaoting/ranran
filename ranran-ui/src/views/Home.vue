@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup name="Home"></script>
 
 <style scoped>
 .app-container {

@@ -95,18 +95,18 @@
   </div>
 </template>
 
-<script setup>
+<script setup name="Role">
 import {nextTick, onMounted, reactive, ref} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {Plus} from '@element-plus/icons-vue'
 import {addRole, deleteRole, getRoleById, getRolePage, updateRole, changeStatus} from '@/api/system/role'
-import {getRoutesTree} from '@/api/system/menu'
+import {getAllMenuTree} from '@/api/system/menu'
 import {useRouter} from 'vue-router'
 
 const router = useRouter()
 
 function handleAssignUser(row) {
-  router.push('/system/roleUserList/' + row.roleId)
+  router.push('/system/role-user/index/' + row.roleId)
 }
 
 const loading = ref(false)
@@ -287,7 +287,7 @@ function handleStatusChange(row) {
 }
 
 function loadMenuData() {
-  return getRoutesTree({}).then(res => {
+  return getAllMenuTree({}).then(res => {
     menuList.value = res.data || []
   })
 }

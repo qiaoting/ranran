@@ -153,7 +153,7 @@
   </el-row>
 </template>
 
-<script setup>
+<script setup name="Profile">
 import { onMounted, reactive, ref } from "vue";
 import { Plus, UserFilled } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";

@@ -139,7 +139,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup name="Task">
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";

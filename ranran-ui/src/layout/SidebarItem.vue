@@ -1,29 +1,29 @@
 <template>
-  <el-menu-item v-if="!hasChildren(item)" :index="resolvePath(item)" :key="item.menuId + '-item'">
-    <el-icon v-if="item.icon">
+  <el-menu-item v-if="item.show === true && !hasChildren(item)" :index="resolvePath(item)">
+    <el-icon v-if="item.meta?.icon">
       <component :is="IconComponent"/>
     </el-icon>
     <span class="title">
-      {{ item.menuName }}
+      {{ item.meta?.title }}
     </span>
   </el-menu-item>
-  <el-sub-menu v-else :index="resolvePath(item)" :key="item.menuId + '-sub'">
-    <template #title>
-      <el-icon v-if="item.icon">
+  <el-sub-menu v-if="hasChildren(item)" :index="resolvePath(item)">
+    <template v-if="item.show === true" #title>
+      <el-icon v-if="item.meta?.icon">
         <component :is="IconComponent"/>
       </el-icon>
       <span v-if="!isCollapse" class="title">
-        {{ item.menuName }}
+        {{ item.meta?.title }}
       </span>
     </template>
-    <template v-for="child in visibleChildren(item)" :key="child.menuId">
+    <template v-for="child in item.children">
       <sidebar-item :item="child" :parent-path="resolvePath(item)" :is-collapse="isCollapse"/>
     </template>
   </el-sub-menu>
 </template>
 
 <script setup>
-import {computed, defineProps} from 'vue'
+import {computed} from 'vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const props = defineProps({
@@ -33,23 +33,21 @@ const props = defineProps({
 })
 
 const IconComponent = computed(() => {
-  if (!props.item.icon) return null
-  return ElementPlusIconsVue[props.item.icon] || null
+  if (!props.item.meta.icon) return null
+  return ElementPlusIconsVue[props.item.meta.icon] || null
 })
 
 function resolvePath(item) {
   if (item.path.startsWith('/')) return item.path
   const parent = props.parentPath.replace(/\/$/, '')
-  return parent ? `${parent}/${item.path}` : `/${item.path}`
+  const path =  parent ? `${parent}/${item.path}` : `/${item.path}`
+  return path
 }
 
 function hasChildren(item) {
-  return item.children && item.children.filter(child => child.status === '1').length > 0
+  return item.children && item.children.filter(child => child.show === true).length > 0
 }
 
-function visibleChildren(item) {
-  return (item.children || []).filter(child => child.status === '1')
-}
 </script>
 
 <style scoped>
