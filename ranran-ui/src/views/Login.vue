@@ -34,13 +34,11 @@
 </template>
 
 <script setup name="Login">
-import {ref, onMounted} from 'vue'
-import {useRouter} from 'vue-router'
-import {ElMessage} from 'element-plus'
 import {useUserStore} from '@/store/user'
 import request from '@/utils/request'
 
 const router = useRouter()
+const route = useRoute()
 const loading = ref(false)
 const loginRef = ref(null)
 const loginForm = ref({
@@ -73,7 +71,8 @@ function handleLogin() {
       userStore.login(loginForm.value).then(res => {
         loading.value = false
         ElMessage.success('登录成功，正在跳转...')
-        router.push('/index')
+        const redirectPath = route.query.redirect || '/index' 
+        router.push(redirectPath) 
       }).catch(error => {
         loading.value = false
         getCodeImage()

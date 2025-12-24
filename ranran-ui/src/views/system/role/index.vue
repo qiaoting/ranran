@@ -96,12 +96,9 @@
 </template>
 
 <script setup name="Role">
-import {nextTick, onMounted, reactive, ref} from 'vue'
-import {ElMessage, ElMessageBox} from 'element-plus'
 import {Plus} from '@element-plus/icons-vue'
 import {addRole, deleteRole, getRoleById, getRolePage, updateRole, changeStatus} from '@/api/system/role'
 import {getAllMenuTree} from '@/api/system/menu'
-import {useRouter} from 'vue-router'
 
 const router = useRouter()
 

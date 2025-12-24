@@ -89,9 +89,6 @@
 </template>
 
 <script setup name="RoleUser">
-import { computed, onMounted, reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { ElMessage, ElMessageBox } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import UserSelectModal from "@/components/UserSelectModal/index.vue";
 import { getRoleById } from "@/api/system/role";

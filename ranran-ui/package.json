@@ -22,9 +22,9 @@
     "@vitejs/plugin-vue": "6.0.1",
     "sass": "1.93.3",
     "sass-embedded": "1.93.3",
-    "unplugin-auto-import": "^20.2.0",
+    "unplugin-auto-import": "20.2.0",
     "unplugin-vue-components": "30.0.0",
-    "unplugin-vue-setup-extend-plus": "^1.0.1",
+    "unplugin-vue-setup-extend-plus": "1.0.1",
     "vite": "7.1.7"
   }
 }

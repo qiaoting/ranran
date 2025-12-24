@@ -6,7 +6,6 @@ import {useMenuStore} from "@/store/menu";
 import {getToken} from "@/utils/auth";
 import NProgress from 'nprogress'
 import {getRoutesTree} from "@/api/system/menu";
-import {ElMessage} from 'element-plus'
 
 NProgress.configure({
   color: '#4fc08d',
@@ -17,17 +16,13 @@ NProgress.configure({
   trickleSpeed: 200
 });
 
-const modules = import.meta.glob("@/views/**/*.vue", {eager: true});
+const modules = import.meta.glob("@/views/**/*.vue");
 
 function loadView(view) {
     for (const path in modules) {
         const match = path.match(/views\/(.*)\.vue$/);
         if (match && match[1] === view) {
-            const module = modules[path];
-            if (module.default) {
-                return () => Promise.resolve(module.default);
-            }
-            return module; 
+            return () => modules[path]()
         }
     }
     return () => import("@/views/public/404.vue");
@@ -178,7 +173,7 @@ router.beforeEach((to, from, next) => {
         if (permitRequest(to.path)) {
             next();
         } else {
-            next(`/login?redirect=${to.fullPath}`);
+            next({ path: '/login' })
         }
     }
 });

@@ -1,4 +1,3 @@
-import {defineStore} from "pinia";
 import {getInfo, login as loginApi, logout as logoutApi,} from "@/api/system/login";
 import {deleteToken, setToken} from "@/utils/auth";
 

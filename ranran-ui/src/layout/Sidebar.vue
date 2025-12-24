@@ -21,9 +21,6 @@
 </template>
 
 <script setup>
-import {computed} from 'vue'
-import {useRoute} from 'vue-router'
-import {storeToRefs} from 'pinia'
 import {useSidebarStore} from '@/store'
 import {useMenuStore} from '@/store/menu'
 import SidebarItem from './SidebarItem.vue'

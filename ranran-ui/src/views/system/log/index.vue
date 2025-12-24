@@ -64,8 +64,6 @@
 </template>
 
 <script setup name="LoginLog">
-import { onMounted, reactive, ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 import { deleteLoginLog, getLoginLogPage } from "@/api/system/loginlog";
 
 const searchForm = reactive({

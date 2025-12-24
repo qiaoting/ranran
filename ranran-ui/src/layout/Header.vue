@@ -34,15 +34,10 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, watch, createVNode, ref } from "vue";
-import {useRouter} from 'vue-router'
-import {ElMessage, ElMessageBox} from 'element-plus'
 import {useSidebarStore} from '@/store'
 import {useUserStore} from '@/store/user'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
-import {Avatar, SwitchButton} from '@element-plus/icons-vue'
 import defaultAvatar from '@/assets/image/avatar.png'
-import { ElNotification } from "element-plus";
 import { useAnnouncementStore } from "@/store/announcement";
 import { announcementIconMap, announcementColorMap } from "@/utils/dict";
 

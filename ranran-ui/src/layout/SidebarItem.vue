@@ -23,7 +23,6 @@
 </template>
 
 <script setup>
-import {computed} from 'vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const props = defineProps({

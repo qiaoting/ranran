@@ -1,4 +1,3 @@
-import {defineStore} from "pinia";
 import {getAnnouncementList} from "@/api/system/announcement";
 
 // 公告store

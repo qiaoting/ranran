@@ -226,10 +226,7 @@
 </template>
 
 <script setup name="Menu">
-import { onMounted, reactive, ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-import { Plus } from "@element-plus/icons-vue";
 import {
   addMenu,
   deleteMenu,

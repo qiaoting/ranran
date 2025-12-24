@@ -159,8 +159,6 @@
 </template>
 
 <script setup name="User">
-import { computed, onMounted, reactive, ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import {
   addUser,

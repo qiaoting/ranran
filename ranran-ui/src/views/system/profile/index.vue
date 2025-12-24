@@ -154,9 +154,7 @@
 </template>
 
 <script setup name="Profile">
-import { onMounted, reactive, ref } from "vue";
 import { Plus, UserFilled } from "@element-plus/icons-vue";
-import { ElMessage } from "element-plus";
 import { useUserStore } from "@/store/user";
 import { getSelf, updatePassword, updateSelf } from "@/api/system/profile";
 import { getToken } from "@/utils/auth";
