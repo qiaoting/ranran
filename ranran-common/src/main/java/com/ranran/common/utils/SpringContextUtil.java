@@ -30,6 +30,11 @@ public class SpringContextUtil implements ApplicationContextAware {
         }
     }
 
+    public static <T> T getBean(Class<T> clz) throws BeansException {
+        T result = applicationContext.getBean(clz);
+        return result;
+    }
+
     public static <T> T getBeanByClassName(String className) {
         if (applicationContext == null) {
             throw new RuntimeException("Spring上下文未初始化");

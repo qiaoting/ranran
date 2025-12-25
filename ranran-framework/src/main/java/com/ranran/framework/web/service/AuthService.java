@@ -4,6 +4,7 @@ import com.ranran.common.constant.Constant;
 import com.ranran.common.domain.Result;
 import com.ranran.common.domain.dto.LoginDto;
 import com.ranran.common.domain.vo.LoginUser;
+import com.ranran.common.utils.MessageUtil;
 import com.ranran.common.utils.ObjUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -32,10 +33,10 @@ public class AuthService {
         Map<String, String> data = new HashMap<>();
         Object realCode = redisTemplate.opsForValue().get(Constant.KAPTCHA_KEY_PREFIX + loginDto.getCodeToken());
         if (ObjUtil.isNull(realCode)) {
-            return Result.fail("验证码已过期");
+            return Result.fail(MessageUtil.getI18nMsg("login.captcha.expire"));
         }
         if (!String.valueOf(realCode).equals(loginDto.getCode())) {
-            return Result.fail("验证码验证失败");
+            return Result.fail(MessageUtil.getI18nMsg("login.captcha.fail"));
         }
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword());
@@ -43,7 +44,7 @@ public class AuthService {
         try {
             authentication = authenticationManager.authenticate(authToken);
         } catch (AuthenticationException e) {
-            return Result.fail("验证失败，用户名或者密码错误");
+            return Result.fail(MessageUtil.getI18nMsg("login.user.password.fail"));
         }
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         String token = jwtService.createToken(loginUser);

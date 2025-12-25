@@ -42,8 +42,6 @@
 </template>
 
 <script setup>
-import {reactive, ref, watch} from 'vue'
-import {ElMessage} from 'element-plus'
 import {getUnallocatedPage} from '@/api/system/roleUser'
 
 const props = defineProps({

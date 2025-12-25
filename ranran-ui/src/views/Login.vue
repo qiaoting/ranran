@@ -3,7 +3,7 @@
     <div class="login-card">
       <div class="login-title">然然管理系统</div>
       <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-        <div class="input-group">
+        <div>
           <el-form-item prop="username" class="input-item">
             <el-input v-model="loginForm.username" type="text" size="large" auto-complete="off" placeholder="账号"
                       prefix-icon="User"/>
@@ -100,7 +100,7 @@ onMounted(() => {
 <style scoped>
 .login-container {
   background-color: #f8e6ca; 
-  background-image: url('../assets/image/login.png');
+  background-image: url('../assets/image/login.jpg');
   background-size: cover;
   height: 100vh;
   display: flex;
@@ -112,12 +112,11 @@ onMounted(() => {
 }
 
 .login-card {
-  width: 100%;
-  max-width: 350px;
+  width: 410px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  padding: 20px 30px;
+  padding: 20px 25px;
 }
 
 .login-title {
@@ -147,13 +146,9 @@ onMounted(() => {
   width: 100%;
 }
 
-.code-container .el-input {
-  flex: 7;
-}
-
 .code-image {
-  flex: 3;
   height: 40px;
+  width: 140px;
   cursor: pointer;
   overflow: hidden;
   border-radius: 4px;

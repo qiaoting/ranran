@@ -4,6 +4,7 @@ import com.ranran.common.domain.Result;
 import com.ranran.common.domain.dto.LoginDto;
 import com.ranran.common.domain.entity.SysUser;
 import com.ranran.common.domain.vo.LoginUser;
+import com.ranran.common.utils.MessageUtil;
 import com.ranran.common.utils.SecurityUtil;
 import com.ranran.framework.web.controller.BaseController;
 import com.ranran.framework.web.service.JwtService;
@@ -57,7 +58,7 @@ public class AuthController extends BaseController {
         SecurityContextHolder.clearContext();
         LoginUser loginUser = jwtService.getLoginUser(request);
         jwtService.logout(loginUser.getUuid());
-        return Result.success("退出成功");
+        return Result.success(MessageUtil.getI18nMsg("logout.success"));
     }
 
 }

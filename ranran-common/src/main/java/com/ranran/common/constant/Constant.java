@@ -6,6 +6,8 @@ package com.ranran.common.constant;
  */
 public class Constant {
 
+    public static final String UTF8 = "UTF-8";
+
     public static final String AUTH_HEADER_NAME = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String LOGIN_KEY_USER = "login_key_user";

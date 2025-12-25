@@ -1,5 +1,6 @@
 package com.ranran.common.utils;
 
+import com.ranran.common.constant.Constant;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +17,7 @@ public class ResponseUtil {
         try {
             response.setStatus(200);
             response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
+            response.setCharacterEncoding(Constant.UTF8);
             response.getWriter().print(string);
         } catch (IOException e) {
             log.error("响应json数据失败 {}", e.getMessage());

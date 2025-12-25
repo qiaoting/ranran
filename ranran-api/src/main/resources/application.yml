@@ -13,6 +13,8 @@ server:
 spring:
   application:
     name: ranran-app
+  messages:
+    basename: i18n/local
   profiles:
     active: dev
   servlet:

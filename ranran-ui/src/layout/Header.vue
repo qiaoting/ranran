@@ -40,6 +40,7 @@ import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import defaultAvatar from '@/assets/image/avatar.png'
 import { useAnnouncementStore } from "@/store/announcement";
 import { announcementIconMap, announcementColorMap } from "@/utils/dict";
+import {Avatar, SwitchButton} from '@element-plus/icons-vue'
 
 const store = useAnnouncementStore();
 const activeAnnouncementId = ref(null);
