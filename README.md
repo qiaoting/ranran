@@ -26,7 +26,7 @@
 
 ### 系统登录
 默认内置 [admin/123456] 账号，拥有所有权限
-![输入图片说明](https://foruda.gitee.com/images/1766061605140882898/232d3d67_9519049.png "登录.png")
+![输入图片说明](https://raw.gitcode.com/user-images/assets/8763983/e99a396e-e63e-4018-9662-e27cd09e4775/登录.png "登录.png")
 
 ### 系统首页
 ![输入图片说明](https://foruda.gitee.com/images/1766061622396058300/f40b286c_9519049.png "首页.png")
