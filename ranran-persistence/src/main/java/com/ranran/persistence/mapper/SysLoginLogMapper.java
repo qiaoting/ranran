@@ -8,4 +8,7 @@ import com.ranran.common.domain.entity.SysLoginLog;
  * 登录日志Mapper
  */
 public interface SysLoginLogMapper extends BaseMapper<SysLoginLog> {
+
+    public void deleteAll();
+
 }

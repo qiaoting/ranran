@@ -24,7 +24,16 @@
         <el-button @click="resetSearch">重置</el-button>
       </el-form-item>
     </el-form>
-
+    <el-row class="mt12 mb8">
+      <el-col>
+        <el-button type="danger" plain @click="handleClear">
+          <el-icon>
+            <Delete />
+          </el-icon>
+          一键清空
+        </el-button>
+      </el-col>
+    </el-row>
     <el-table :data="loginLogList" :loading="loading" style="margin-top: 15px">
       <el-table-column prop="username" label="用户名" align="center" width="120" />
       <el-table-column
@@ -64,7 +73,8 @@
 </template>
 
 <script setup name="LoginLog">
-import { deleteLoginLog, getLoginLogPage } from "@/api/system/loginlog";
+import { Delete } from "@element-plus/icons-vue";
+import { deleteLoginLog, getLoginLogPage, deleteAllLoginLog } from "@/api/system/loginlog";
 
 const searchForm = reactive({
   username: undefined,
@@ -130,6 +140,23 @@ function handleDelete(row) {
   ).then(() => {
     deleteLoginLog({ logId: row.logId }).then((res) => {
       ElMessage.success("删除成功");
+      fetchLoginLogList();
+    });
+  });
+}
+
+function handleClear(row) {
+  ElMessageBox.confirm(
+    `确定要清空所有登录日志吗？`,
+    "确认清空",
+    {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    }
+  ).then(() => {
+    deleteAllLoginLog({ logId: row.logId }).then((res) => {
+      ElMessage.success("清空成功");
       fetchLoginLogList();
     });
   });

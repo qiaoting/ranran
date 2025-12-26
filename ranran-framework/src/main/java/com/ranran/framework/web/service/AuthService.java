@@ -6,6 +6,7 @@ import com.ranran.common.domain.dto.LoginDto;
 import com.ranran.common.domain.vo.LoginUser;
 import com.ranran.common.utils.MessageUtil;
 import com.ranran.common.utils.ObjUtil;
+import com.ranran.persistence.service.impl.SysLoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,8 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private SysLoginLogService sysLoginLogService;
 
     public Result<Map> validate(LoginDto loginDto) {
         Map<String, String> data = new HashMap<>();
@@ -49,6 +52,7 @@ public class AuthService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         String token = jwtService.createToken(loginUser);
         data.put("token", token);
+        sysLoginLogService.recordLogin(loginUser.getUsername(), "登录成功");
         return Result.success(data);
     }
 

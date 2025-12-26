@@ -17,3 +17,13 @@ export const deleteLoginLog = (data) => {
         data
     })
 }
+
+export const deleteAllLoginLog = (data) => {
+    return request({
+        url: `/api/loginlog/clear`,
+        method: 'delete',
+        data
+    })
+}
+
+

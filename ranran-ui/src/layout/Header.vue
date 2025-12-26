@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import { createVNode } from "vue";
 import {useSidebarStore} from '@/store'
 import {useUserStore} from '@/store/user'
 import Breadcrumb from '@/components/Breadcrumb/index.vue'

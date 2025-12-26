@@ -13,7 +13,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysLoginLogService extends ServiceImpl<SysLoginLogMapper, SysLoginLog> {
     @Async
-    public void record(SysLoginLog loginLog) {
+    public void recordLogin(SysLoginLog loginLog) {
         save(loginLog);
     }
+
+    @Async
+    public void recordLogin(String username, String msg) {
+        SysLoginLog loginLog = new SysLoginLog();
+        loginLog.setUsername(username);
+        loginLog.setMsg(msg);
+        save(loginLog);
+    }
+
+    public void deleteAll() {
+        baseMapper.deleteAll();
+    }
+
 }

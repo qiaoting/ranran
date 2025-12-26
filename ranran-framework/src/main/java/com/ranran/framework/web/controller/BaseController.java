@@ -22,7 +22,7 @@ public class BaseController {
         SysLoginLog sysLoginLog = new SysLoginLog();
         sysLoginLog.setUsername(username);
         sysLoginLog.setMsg(msg);
-        sysLoginLogService.record(sysLoginLog);
+        sysLoginLogService.recordLogin(sysLoginLog);
     }
 
     protected PageVo getPageData(List<?> list, long total) {

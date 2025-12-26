@@ -1,4 +1,4 @@
-package com.ranran.api.controller.system;
+package com.ranran.api.controller.monitor;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,6 +11,7 @@ import com.ranran.framework.context.PageContext;
 import com.ranran.framework.web.controller.BaseController;
 import com.ranran.persistence.service.impl.SysLoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,7 @@ public class SysLoginLogController extends BaseController {
     private SysLoginLogService sysLoginLogService;
 
     @GetMapping("/page")
+    @PreAuthorize("@pcs.hasPermission('monitor:loginlog:index')")
     public PageVo page(SysLoginLog sysLoginLog) {
         Page<SysLoginLog> page = PageContext.getPage();
         LambdaQueryWrapper<SysLoginLog> queryWrapper = new LambdaQueryWrapper<>();
@@ -40,7 +42,15 @@ public class SysLoginLogController extends BaseController {
         return getPageData(logPage.getRecords(), logPage.getTotal());
     }
 
+    @DeleteMapping("/clear")
+    @PreAuthorize("@pcs.hasPermission('monitor:loginlog:index')")
+    public Result<Void> clear() {
+        sysLoginLogService.deleteAll();
+        return Result.success();
+    }
+
     @DeleteMapping("/delete")
+    @PreAuthorize("@pcs.hasPermission('monitor:loginlog:index')")
     public Result<Void> delete(@RequestParam Long logId) {
         boolean remove = sysLoginLogService.removeById(logId);
         if (remove) {

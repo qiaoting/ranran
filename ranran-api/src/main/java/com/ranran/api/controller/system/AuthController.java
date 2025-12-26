@@ -49,7 +49,6 @@ public class AuthController extends BaseController {
         userMap.put("username", sysUser.getUsername());
         userMap.put("nickname", sysUser.getNickname());
         userMap.put("avatar", sysUser.getAvatar());
-        recordLog("登录系统");
         return Result.success(userMap);
     }
 

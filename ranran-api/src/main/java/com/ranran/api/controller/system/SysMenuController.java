@@ -38,7 +38,7 @@ public class SysMenuController {
     }
 
     /**
-     * 获取菜单树（用于前端路由渲染）
+     * 获取路由树（用于前端路由渲染）
      */
     @GetMapping("/getRoutesTree")
     public Result<List<RouteVo>> getRoutesTree(SysMenu sysMenu) {

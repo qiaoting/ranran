@@ -8,6 +8,7 @@ import com.ranran.common.utils.CollUtil;
 import com.ranran.common.utils.SpringContextUtil;
 import com.ranran.persistence.service.impl.SysTaskService;
 import com.ranran.persistence.task.DynamicTask;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -27,6 +28,7 @@ import java.util.concurrent.ScheduledFuture;
  * 动态任务
  */
 @Service
+@Slf4j
 public class DynamicTaskService implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     private SysTaskService sysTaskService;
@@ -70,8 +72,12 @@ public class DynamicTaskService implements ApplicationListener<ContextRefreshedE
             return;
         }
         for (SysTask sysTask : list) {
-            DynamicTask taskBean = SpringContextUtil.getBean(sysTask.getTaskCode());
-            addCronTask(sysTask.getTaskId(), taskBean, sysTask.getCronExpression());
+            try {
+                DynamicTask taskBean = SpringContextUtil.getBean(sysTask.getTaskCode());
+                addCronTask(sysTask.getTaskId(), taskBean, sysTask.getCronExpression());
+            } catch (Exception e) {
+                log.error("初始化定时任务失败，任务ID：{}", sysTask.getTaskId(), e);
+            }
         }
     }
 
