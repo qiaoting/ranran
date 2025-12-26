@@ -83,4 +83,26 @@
 - 前端代码中vite.config.js文件中配置了代理，默认指向本地的8080端口，如有需要可自行修改
   target: 'http://localhost:8080/'
 - 执行 `npm run dev` 启动前端服务，默认端口为80
-- 浏览器访问 `http://localhost:80` 即可看到系统登录页面，第一要启动加载会稍微慢一下
+- 浏览器访问 `http://localhost:80` 即可看到系统登录页面
+
+## 五、项目代码结构说明
+### 1、后端代码结构
+- ranran              # 项目根目录，可以在此目录下执行mvn打包命令等
+  - ranran-api          # 接口模块，主要存放Controller层代码
+  - ranran-common       # 通用模块，主要存放公共的工具类、常量类、枚举类等
+  - ranran-persistence  # 系统模块，主要存放实体类、Service类、Mapper接口、XML映射文件等
+  - ranran-framework    # 框架模块，主要存放spring和其他依赖的相关配置，如安全配置、缓存配置等
+
+### 2、前端代码结构
+- ranran-ui           # 前端代码根目录
+  - public              # 静态资源目录
+  - src                 # 源代码目录
+    - api               # 存放所有请求后端接口相关代码
+    - assets            # 存放静态资源，如图片、字体等
+    - components        # 存放公共组件
+    - views             # 存放各个页面组件，开发时主要在此目录下新增页面
+    - store             # 存放Pinia状态管理相关代码
+    - router            # 存放路由相关代码
+    - utils             # 存放工具类函数
+    - App.vue          # 根组件
+    - main.js          # 入口文件
