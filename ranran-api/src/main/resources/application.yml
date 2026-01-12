@@ -24,8 +24,8 @@ spring:
 
 # MyBatis-Plus 配置
 mybatis-plus:
-  mapper-locations: classpath:mapper/**/*.xml,classpath:mapper/*.xml
-  type-aliases-package: com.ranran.common.domain.entity
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  type-aliases-package: com.ranran.**.domain.entity
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl

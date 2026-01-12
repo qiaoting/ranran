@@ -17,6 +17,10 @@
             <groupId>com.ranran</groupId>
             <artifactId>ranran-framework</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ranran</groupId>
+            <artifactId>ranran-generator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

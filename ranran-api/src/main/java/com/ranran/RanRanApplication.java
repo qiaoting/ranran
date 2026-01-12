@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
-@MapperScan("com.ranran.persistence.mapper")
+@MapperScan("com.ranran.**.mapper")
 @Slf4j
 public class RanRanApplication {
     static {

@@ -12,6 +12,7 @@
     "@element-plus/icons-vue": "2.3.2",
     "axios": "1.13.1",
     "element-plus": "2.11.5",
+    "highlight.js": "11.11.1",
     "js-cookie": "3.0.5",
     "nprogress": "0.2.0",
     "pinia": "3.0.3",

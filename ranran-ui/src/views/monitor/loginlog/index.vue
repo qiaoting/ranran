@@ -34,7 +34,7 @@
         </el-button>
       </el-col>
     </el-row>
-    <el-table :data="loginLogList" :loading="loading" style="margin-top: 15px">
+    <el-table :data="loginLogList" :loading="loading">
       <el-table-column prop="username" label="用户名" align="center" width="120" />
       <el-table-column
         prop="createTime"
@@ -74,7 +74,7 @@
 
 <script setup name="LoginLog">
 import { Delete } from "@element-plus/icons-vue";
-import { deleteLoginLog, getLoginLogPage, deleteAllLoginLog } from "@/api/system/loginlog";
+import { deleteLoginLog, getLoginLogPage, deleteAllLoginLog } from "@/api/monitor/loginlog";
 
 const searchForm = reactive({
   username: undefined,

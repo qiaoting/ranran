@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ranran.generator.mapper.GeneratorTableMapper">
+
+    <select id="selectAllTable" parameterType="String" resultType="GeneratorTable">
+        select table_name, engine, table_comment as comment
+        from information_schema.tables
+        where 1 = 1
+        <choose>
+            <when test="dbName != null and dbName != ''">
+                AND table_schema = #{dbName}
+            </when>
+            <otherwise>
+                AND table_schema = DATABASE()
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>
