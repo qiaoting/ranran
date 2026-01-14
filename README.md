@@ -1,26 +1,25 @@
 ## 一、项目说明
 
-感谢您关注此开源项目。本开源项目使用SpringBoot、MybatisPlus、Vue、Element-Plus，
-旨在通过简洁实用的方式整合最新技术栈，便于开发、调试与交付。
-希望它能为你的学习和开发工作带来帮助与借鉴。 对于希望自己从零快速搭建项目框架的开发者
-或者喜欢纯粹原生组件无过度封装的，特别适合本项目。克隆项目后可以快速配置并启动。
+本开源项目技术栈是SpringBoot，MybatisPlus，Vue，Element-Plus。通过简洁实用的方式整合这些最新技术版本，使得该项目便于开发、调试与交付。
+希望它能为你的学习和开发工作带来帮助与借鉴。 对于想从零快速搭建项目框架的开发者
+或者喜欢纯粹原生组件无过度封装的学习者来说，本项目无疑是个很棒的选择。克隆项目后可以快速配置并启动。
 ## 二、开发环境
 ### 后端
     后端的依赖非常精简，基本以spring相关为主
-- Java 21  # 使用了当前最新版本的springboot，建议java版本为21，不过使用17也不会报错
-- Spring Boot 4.0.0
-- MyBatis Plus 3.5.15
-- MySQL 8.0.41 # 服务器上安装的mysql版本为5.7
-- Redis 5.0.14.1
-- Maven 3.9.6
+- Java 21  # 使用了当前最新版本的springboot，建议java版本为21，如果要使用17的话需要修改pom中<java.version></java.version>
+- SpringBoot 4.0
+- MyBatisPlus 3.5
+- MySQL 8.0 # 服务器上安装的mysql版本为5.7
+- Redis 5.0
+- Maven 3.9
 ### 前端
 - Node 22
-- Vite 7.2.7
-- Vue 3.5.22
-- Element-Plus 2.11.5
-- Pinia 3.0.3
-- Router 4.6.3
-- Axios 1.13.1
+- Vite 7.2
+- Vue 3.5
+- Element-Plus 2.11
+- Pinia 3.0
+- Router 4.6
+- Axios 1.13
 
 ## 三、功能简介
 
@@ -37,7 +36,6 @@
 ### 用户管理
 管理员账号默认禁止删除和禁用，其他用户新增修改均可操作，删除需要注意有无在角色中绑定，需要解绑后才可删除
 ![用户管理](./doc/界面截图/用户管理.png "用户管理.png")
-
 
 ### 菜单管理
 添加新菜单，要求在前端代码中views目录下有对应的页面文件,比如添加图书管理菜单：
@@ -79,7 +77,7 @@
 直接在mysql中执行sql目录下的 `ranran.sql` 脚本即可创建所需的数据库表和几行初始数据；保证redis可用
 ### 2、后端环境搭建
 - 安装JDK 21，并配置好环境变量
-- 安装Maven 3.9.6，也可以使用idea中自带的maven
+- 安装Maven 3.9，也可以使用idea中自带的maven
 - 使用IDEA打开后端代码，等待依赖下载完成，或者手动点击maven的更新依赖按钮
 - 修改 `src/main/resources/application-dev.yml` 中的Mysql、Redis连接配置为你本地的配置
 - 运行 `com.ranran.system.RanranSystemApplication` 启动后端服务，默认端口8080
@@ -100,6 +98,7 @@
   - ranran-common       # 通用模块，主要存放公共的工具类、常量类、枚举类等
   - ranran-persistence  # 系统模块，主要存放实体类、Service类、Mapper接口、XML映射文件等
   - ranran-framework    # 框架模块，主要存放spring和其他依赖的相关配置，如安全配置、缓存配置等
+  - ranran-generator    # 代码生成模块，主要存放代码生成相关的数据库查询，业务逻辑处理和接口
 
 ### 2、前端代码结构
 - ranran-ui           # 前端代码根目录

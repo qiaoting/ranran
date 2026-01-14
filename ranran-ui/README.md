@@ -1,11 +1,11 @@
 ### 前端依赖
 - Node 22
-- Vite 7.2.7
-- Vue 3.5.22
-- Element-Plus 2.11.5
-- Pinia 3.0.3
-- Router 4.6.3
-- Axios 1.13.1
+- Vite 7.2
+- Vue 3.5
+- Element-Plus 2.11
+- Pinia 3.0
+- Router 4.6
+- Axios 1.13
 
 ### 前端开发环境搭建
 - 安装Node 22，并配置好环境变量
