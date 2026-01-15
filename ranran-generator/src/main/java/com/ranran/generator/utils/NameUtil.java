@@ -2,16 +2,17 @@ package com.ranran.generator.utils;
 
 import com.ranran.common.utils.ObjUtil;
 import com.ranran.common.utils.StrUtil;
+import org.springframework.util.StringUtils;
 
 /**
  * @author ranran
  */
-public class TableUtil {
-    public static String convert(String tableName, String[] removePrefixes) {
-        if (!StrUtil.hasText(tableName)) {
-            throw new IllegalArgumentException("表名不能为空");
+public class NameUtil {
+    public static String toBigCamelCase(String name, String[] removePrefixes) {
+        if (!StrUtil.hasText(name)) {
+            throw new IllegalArgumentException("名称不能为空");
         }
-        String lowerTableName = tableName.toLowerCase();
+        String lowerTableName = name.toLowerCase();
         if (ObjUtil.isNotNull(removePrefixes)) {
             for (String prefix : removePrefixes) {
                 if (lowerTableName.startsWith(prefix.toLowerCase())) {
@@ -29,13 +30,13 @@ public class TableUtil {
             }
         }
         if (className.isEmpty()) {
-            throw new RuntimeException("转换后的类名不能为空，表名：" + tableName);
+            throw new RuntimeException("转换后的类名不能为空，表名：" + name);
         }
         return className.toString();
     }
-
-    public static String convert(String tableName) {
-        return convert(tableName, null);
+    public static String toSmallCamelCase(String name) {
+        String bigCamelCase = toBigCamelCase(name, null);
+        return StringUtils.uncapitalize(bigCamelCase);
     }
 
 }

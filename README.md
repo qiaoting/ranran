@@ -1,7 +1,7 @@
 ## 一、项目说明
 
 本开源项目技术栈是SpringBoot，MybatisPlus，Vue，Element-Plus。通过简洁实用的方式整合这些最新技术版本，使得该项目便于开发、调试与交付。
-希望它能为你的学习和开发工作带来帮助与借鉴。 对于想从零快速搭建项目框架的开发者
+希望它能为你的学习和开发工作带来帮助与借鉴。对于想从零快速搭建项目框架的开发者
 或者喜欢纯粹原生组件无过度封装的学习者来说，本项目无疑是个很棒的选择。克隆项目后可以快速配置并启动。
 ## 二、开发环境
 ### 后端
@@ -9,7 +9,7 @@
 - Java 21  # 使用了当前最新版本的springboot，建议java版本为21，如果要使用17的话需要修改pom中<java.version></java.version>
 - SpringBoot 4.0
 - MyBatisPlus 3.5
-- MySQL 8.0 # 服务器上安装的mysql版本为5.7
+- MySQL 8.0 # 5.7也可以
 - Redis 5.0
 - Maven 3.9
 ### 前端
@@ -80,7 +80,7 @@
 - 安装Maven 3.9，也可以使用idea中自带的maven
 - 使用IDEA打开后端代码，等待依赖下载完成，或者手动点击maven的更新依赖按钮
 - 修改 `src/main/resources/application-dev.yml` 中的Mysql、Redis连接配置为你本地的配置
-- 运行 `com.ranran.system.RanranSystemApplication` 启动后端服务，默认端口8080
+- 运行 `com.ranran.RanranApplication` 启动后端服务，默认端口8080
 
 ### 3、前端环境搭建
 - 安装Node 22，并配置好环境变量

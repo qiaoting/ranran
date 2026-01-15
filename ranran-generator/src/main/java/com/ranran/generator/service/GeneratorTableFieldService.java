@@ -21,15 +21,15 @@ public class GeneratorTableFieldService {
         List<GeneratorTableField> generatorTableFields = generatorTableFieldMapper.selectAllField(tableName);
         for (GeneratorTableField generatorTableField : generatorTableFields) {
             if (GenerateConstant.LONG_TYPE.contains(generatorTableField.getColumnType())) {
-                generatorTableField.setJavaType("Long");
+                generatorTableField.setPropertyType("Long");
             } else if (GenerateConstant.INTEGER_TYPE.contains(generatorTableField.getColumnType())) {
-                generatorTableField.setJavaType("Integer");
+                generatorTableField.setPropertyType("Integer");
             } else if (GenerateConstant.DATE_TIME_TYPE.contains(generatorTableField.getColumnType())) {
-                generatorTableField.setJavaType("LocalDateTime");
+                generatorTableField.setPropertyType("LocalDateTime");
             } else if (GenerateConstant.STRING_TYPE.contains(generatorTableField.getColumnType())) {
-                generatorTableField.setJavaType("String");
+                generatorTableField.setPropertyType("String");
             } else {
-                generatorTableField.setJavaType("BigDecimal");
+                generatorTableField.setPropertyType("BigDecimal");
             }
         }
         return generatorTableFields;

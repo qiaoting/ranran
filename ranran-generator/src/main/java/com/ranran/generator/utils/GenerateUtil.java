@@ -18,7 +18,10 @@ public class GenerateUtil {
         }
         classInfoDto.setFields(generatorTableFields);
         classInfoDto.setBasePackageName(GenerateConstant.BASE_PACKAGE);
-        classInfoDto.setEntityClassName(TableUtil.convert(classInfoDto.getTableName()));
+        classInfoDto.setEntityClassName(NameUtil.toBigCamelCase(classInfoDto.getTableName(), null));
+        for (GeneratorTableField tableField : generatorTableFields) {
+            tableField.setPropertyName(NameUtil.toSmallCamelCase(tableField.getColumnName()));
+        }
         return classInfoDto;
     }
 

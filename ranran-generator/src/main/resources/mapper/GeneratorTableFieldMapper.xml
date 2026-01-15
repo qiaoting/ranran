@@ -9,8 +9,8 @@
             column_name as columnname,
             data_type as columntype,
             column_comment as remarks,
-            case when is_nullable = 'yes' then 1 else 0 end as isnullable,
-            case when column_key = 'pri' then 1 else 0 end as isprimarykey
+            case when LOWER(is_nullable) = 'yes' then 1 else 0 end as isnullable,
+            case when LOWER(column_key) = 'pri' then 1 else 0 end as isprimarykey
         from information_schema.columns
         where table_schema = (select database()) and table_name = #{tableName}
         order by ordinal_position

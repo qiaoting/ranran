@@ -41,7 +41,7 @@ public class ${entityClassName} {
     <#if field.javaType == "LocalDateTime">
     @JsonFormat(pattern = DateConstant.YYYY_MM_DD_HH_MM_SS)
     </#if>
-    private ${field.javaType} ${field.columnName};
+    private ${field.propertyType} ${field.propertyName};
 
 </#list>
 
