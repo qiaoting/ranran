@@ -1,17 +1,25 @@
-package ${basePackageName}.api.${moduleName}.controller;
+package ${basePackageName}.api.controller.${moduleName};
 
-import ${basePackageName}.common.entity.${entityClassName};
+import ${basePackageName}.common.domain.entity.${entityClassName};
 import ${basePackageName}.persistence.service.${entityClassName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import com.ranran.common.domain.vo.PageVo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ranran.framework.context.PageContext;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ranran.common.domain.Result;
+import org.springframework.validation.annotation.Validated;
+import com.ranran.framework.web.controller.BaseController;
 
 /**
 * ${functionName}Controller
 * @author ${author}
 */
 @RestController
-@RequestMapping("/${entityClassName?lower_case}")
-public class ${entityClassName}Controller {
+@RequestMapping("/api/${entityClassName?lower_case}")
+public class ${entityClassName}Controller extends BaseController {
 
     @Autowired
     private ${entityClassName}Service ${entityClassName?uncap_first}Service;

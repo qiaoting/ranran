@@ -5,14 +5,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import java.io.Serializable;
 import com.ranran.common.constant.DateConstant;
 <#list fields as field>
-    <#if field.javaType == "LocalDateTime">
+    <#if field.propertyType == "LocalDateTime">
         <#if !importTypes?seq_contains("LocalDateTime")>
             <#assign importTypes = importTypes + ["LocalDateTime"]>
         </#if>
-    <#elseif field.javaType == "BigDecimal">
+    <#elseif field.propertyType == "BigDecimal">
         <#if !importTypes?seq_contains("BigDecimal")>
             <#assign importTypes = importTypes + ["BigDecimal"]>
         </#if>
@@ -20,7 +19,8 @@ import com.ranran.common.constant.DateConstant;
 </#list>
 <#list importTypes as type>
     <#if type == "LocalDateTime">
-import java.time.LocalDateTime;
+        import com.fasterxml.jackson.annotation.JsonFormat;
+        import java.time.LocalDateTime;
     <#elseif type == "BigDecimal">
 import java.math.BigDecimal;
     </#if>
@@ -38,7 +38,7 @@ public class ${entityClassName} {
     <#if field.isPrimaryKey()>
     @TableId(type = IdType.AUTO)
     </#if>
-    <#if field.javaType == "LocalDateTime">
+    <#if field.propertyType == "LocalDateTime">
     @JsonFormat(pattern = DateConstant.YYYY_MM_DD_HH_MM_SS)
     </#if>
     private ${field.propertyType} ${field.propertyName};

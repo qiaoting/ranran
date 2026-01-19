@@ -1,6 +1,6 @@
 package ${basePackageName}.persistence.mapper;
 
-import ${basePackageName}.common.entity.${entityClassName};
+import ${basePackageName}.common.domain.entity.${entityClassName};
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
