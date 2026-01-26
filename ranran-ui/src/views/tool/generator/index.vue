@@ -28,7 +28,7 @@
     >
       <div class="query-params">
         <el-row :gutter="20">
-          <el-col :span="5">
+          <el-col :span="4">
             <el-input
               v-model="queryParam.moduleName"
               placeholder="模块名（如：system）"
@@ -36,7 +36,7 @@
               clearable
             ></el-input>
           </el-col>
-          <el-col :span="5">
+          <el-col :span="4">
             <el-input
               v-model="queryParam.functionName"
               placeholder="功能名（如：用户管理）"
@@ -44,7 +44,15 @@
               clearable
             ></el-input>
           </el-col>
-          <el-col :span="5">
+          <el-col :span="4">
+            <el-input
+              v-model="queryParam.businessName"
+              placeholder="功能英文名（如：config）"
+              label="功能英文名"
+              clearable
+            ></el-input>
+          </el-col>
+          <el-col :span="4">
             <el-input
               v-model="queryParam.author"
               placeholder="作者"
@@ -52,7 +60,7 @@
               clearable
             ></el-input>
           </el-col>
-          <el-col :span="5">
+          <el-col :span="4">
             <el-button
               type="primary"
               @click="generateTableCode"
@@ -137,7 +145,8 @@ function fetchGeneratorTableList() {
 function openGenerateDialog(row) {
   queryParam.tableName = row.tableName;
   queryParam.moduleName = 'system';
-  queryParam.functionName = row.comment;
+  queryParam.functionName = '系统配置';
+  queryParam.businessName = 'config';
   queryParam.author = 'ranran';
   generateTableCode();
 }

@@ -42,7 +42,7 @@ public class JwtService {
         loginUser.setUuid(uuid);
         refreshToken(loginUser);
         Map<String, Object> claims = new HashMap<>();
-        claims.put(Constant.LOGIN_KEY_USER, uuid);
+        claims.put(Constant.LOGIN_JWT_KEY, uuid);
         return Jwts.builder()
                 .setClaims(claims)
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()), io.jsonwebtoken.SignatureAlgorithm.HS512)
@@ -54,7 +54,7 @@ public class JwtService {
         if (StrUtil.hasText(token)) {
             try {
                 Claims claims = parseToken(token);
-                String uuid = (String) claims.get(Constant.LOGIN_KEY_USER);
+                String uuid = (String) claims.get(Constant.LOGIN_JWT_KEY);
                 if (StrUtil.hasText(uuid)) {
                     String cacheKey = getCacheKey(uuid);
                     LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(cacheKey);
@@ -106,7 +106,7 @@ public class JwtService {
     }
 
     private String getCacheKey(String uuid) {
-        return Constant.CACHE_KEY_PREFIX + uuid;
+        return Constant.LOGIN_KEY_PREFIX + uuid;
     }
 
 }

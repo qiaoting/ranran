@@ -28,7 +28,7 @@ public class ${entityClassName}Controller extends BaseController {
     * 分页查询${entityClassName}数据
     */
     @GetMapping("/page")
-    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${entityClassName?lower_case}:index')")
+    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${businessName}:index')")
     public PageVo page(${entityClassName} ${entityClassName?uncap_first}) {
         Page<${entityClassName}> page = PageContext.getPage();
         IPage<${entityClassName}> dataPage = ${entityClassName?uncap_first}Service.page(page);
@@ -39,7 +39,7 @@ public class ${entityClassName}Controller extends BaseController {
     * 新增${entityClassName}数据
     */
     @PostMapping("/add")
-    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${entityClassName?lower_case}:index')")
+    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${businessName}:index')")
     public Result<Void> add(@Validated @RequestBody ${entityClassName} ${entityClassName?uncap_first}) {
         boolean save = ${entityClassName?uncap_first}Service.save(${entityClassName?uncap_first});
         if (save) {
@@ -53,7 +53,7 @@ public class ${entityClassName}Controller extends BaseController {
     * 修改${entityClassName}数据
     */
     @PostMapping("/edit")
-    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${entityClassName?lower_case}:index')")
+    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${businessName}:index')")
     public Result<Void> edit(@Validated @RequestBody ${entityClassName} ${entityClassName?uncap_first}) {
         boolean update = ${entityClassName?uncap_first}Service.updateById(${entityClassName?uncap_first});
         if (update) {
@@ -67,7 +67,7 @@ public class ${entityClassName}Controller extends BaseController {
     * 根据ID查询单个${entityClassName}数据
     */
     @GetMapping("/getById")
-    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${entityClassName?lower_case}:index')")
+    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${businessName}:index')")
     public Result<${entityClassName}> getById(@RequestParam Long ${entityClassName?uncap_first}Id) {
             ${entityClassName} ${entityClassName?uncap_first} = ${entityClassName?uncap_first}Service.getById(${entityClassName?uncap_first}Id);
         return Result.success(${entityClassName?uncap_first});
@@ -77,7 +77,7 @@ public class ${entityClassName}Controller extends BaseController {
     * 根据ID删除${entityClassName}数据
     */
     @DeleteMapping("/delete")
-    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${entityClassName?lower_case}:index')")
+    @PreAuthorize("@pcs.hasPermission('${moduleName?lower_case}:${businessName}:index')")
     public Result<Void> delete(@RequestParam Long ${entityClassName?uncap_first}Id) {
         boolean remove = ${entityClassName?uncap_first}Service.removeById(${entityClassName?uncap_first}Id);
         if (remove) {

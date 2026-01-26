@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public Result<Void> handleBusinessException(BusinessException e, HttpServletRequest request) {
         log.error("请求地址:'{}', 错误信息:{}", request.getRequestURI(), e.getMessage());
-        return Result.fail(ResultCode.ERROR.getCode(), "系统繁忙，请稍后再试");
+        return Result.fail(ResultCode.ERROR.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

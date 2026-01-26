@@ -13,6 +13,7 @@ public class ClassInfoDto {
     /** 基础信息 **/
     public String tableName;
     public String moduleName;
+    public String businessName;
     public String functionName;
     public String author;
     public List<GeneratorTableField> fields;

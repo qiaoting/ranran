@@ -39,7 +39,6 @@
     <el-table
       :data="announcementList"
       :loading="loading"
-      style="margin-top: 15px"
     >
       <el-table-column prop="title" label="公告标题" align="center" />
       <el-table-column prop="content" label="公告内容" align="center">

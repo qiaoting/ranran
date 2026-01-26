@@ -19,8 +19,8 @@ import com.ranran.common.constant.DateConstant;
 </#list>
 <#list importTypes as type>
     <#if type == "LocalDateTime">
-        import com.fasterxml.jackson.annotation.JsonFormat;
-        import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
     <#elseif type == "BigDecimal">
 import java.math.BigDecimal;
     </#if>
